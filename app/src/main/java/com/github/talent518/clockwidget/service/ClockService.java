@@ -25,7 +25,6 @@ public class ClockService extends Service {
             AppWidgetManager manager = AppWidgetManager.getInstance(ClockService.this);
             int[] ids = manager.getAppWidgetIds(thisWidget);
             if (ids == null || ids.length == 0) {
-                stopService(new Intent(getApplicationContext(), ClockService.class));
                 return;
             }
 
