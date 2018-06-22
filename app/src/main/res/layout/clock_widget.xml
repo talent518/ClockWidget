@@ -8,6 +8,8 @@
         android:id="@+id/iv_clock"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="matrix"/>
+        android:scaleType="matrix"
+        android:clickable="true"
+        android:focusableInTouchMode="true"/>
 
 </RelativeLayout>

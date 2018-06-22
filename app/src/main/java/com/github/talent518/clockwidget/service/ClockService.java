@@ -8,23 +8,29 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.github.talent518.clockwidget.provider.ClockWidget;
+
+import java.time.Clock;
 
 /**
  * Created by john on 26.11.2016.
  */
 
 public class ClockService extends Service {
+    private static final String TAG = ClockService.class.getSimpleName();
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Log.i(TAG, "handleMessage");
 
             // Push update for this widget to the Clock screen
             ComponentName thisWidget = new ComponentName(ClockService.this, ClockWidget.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(ClockService.this);
             int[] ids = manager.getAppWidgetIds(thisWidget);
             if (ids == null || ids.length == 0) {
+                stopService(new Intent(getApplicationContext(), ClockService.class));
                 return;
             }
 
@@ -38,14 +44,26 @@ public class ClockService extends Service {
 
     @Override
     public void onCreate() {
+        Log.d(TAG, "onCreate");
         super.onCreate();
 
-        mHandler.sendEmptyMessageDelayed(0, 1000);
+        mHandler.sendEmptyMessage(0);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_NOT_STICKY;
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+        super.onDestroy();
     }
 }

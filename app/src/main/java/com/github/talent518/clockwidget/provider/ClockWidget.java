@@ -1,5 +1,6 @@
 package com.github.talent518.clockwidget.provider;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -33,7 +34,7 @@ import java.util.Date;
  * Implementation of App Widget functionality.
  */
 public class ClockWidget extends AppWidgetProvider {
-    private static final String TAG = ClockWidget.class.getName();
+    private static final String TAG = ClockWidget.class.getSimpleName();
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd\nHH:mm:ss");
 
     SharedPreferences pref = null;
@@ -47,6 +48,9 @@ public class ClockWidget extends AppWidgetProvider {
         draw(new Canvas(bitmap));
         views.setImageViewBitmap(R.id.iv_clock, bitmap);
 
+
+        views.setOnClickPendingIntent(R.id.iv_clock, PendingIntent.getService(context, 0, new Intent(context, ClockService.class), 0));
+
         try {
             FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "ClockWidget-" + appWidgetId + ".png"));
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
@@ -59,6 +63,8 @@ public class ClockWidget extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        Log.d(TAG, "updateAppWidget: appWidgetId = " + appWidgetId);
     }
 
     @Override
