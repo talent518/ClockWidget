@@ -13,7 +13,6 @@ import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -21,10 +20,6 @@ import android.widget.RemoteViews;
 import com.github.talent518.clockwidget.R;
 import com.github.talent518.clockwidget.service.ClockService;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -48,18 +43,17 @@ public class ClockWidget extends AppWidgetProvider {
         draw(new Canvas(bitmap));
         views.setImageViewBitmap(R.id.iv_clock, bitmap);
 
-
         views.setOnClickPendingIntent(R.id.iv_clock, PendingIntent.getService(context, 0, new Intent(context, ClockService.class), 0));
 
-        try {
-            FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "ClockWidget-" + appWidgetId + ".png"));
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "ClockWidget-" + appWidgetId + ".png"));
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//            fos.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -82,6 +76,7 @@ public class ClockWidget extends AppWidgetProvider {
 
         pref = context.getSharedPreferences("widgetOptions", Context.MODE_PRIVATE);
         dm = context.getResources().getDisplayMetrics();
+
         super.onReceive(context, intent);
     }
 

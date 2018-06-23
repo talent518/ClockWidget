@@ -14,7 +14,6 @@
         <receiver android:name=".provider.ClockWidget" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name=".activity.REQUEST_WIDGET_UPDATE" />
             </intent-filter>
 
@@ -25,8 +24,10 @@
 
         <service
             android:name=".service.ClockService"
-            android:exported="true">
-            <intent-filter>
+            android:enabled="true"
+            android:exported="true"
+            android:persistent="true">
+            <intent-filter android:priority="0x7fffffff">
                 <action android:name="ClockService"/>
             </intent-filter>
         </service>
