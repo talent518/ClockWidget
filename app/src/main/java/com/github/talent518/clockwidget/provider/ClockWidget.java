@@ -165,7 +165,7 @@ public class ClockWidget extends AppWidgetProvider {
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
         final float RADIUS = Math.min(width, height) / 2.0f;
-        final float DIAL = RADIUS - 10.0f;
+        final float DIAL = RADIUS * 0.95f;
         final float DIAL2 = DIAL - RADIUS * 0.05f;
         final float TEXTSIZE = DIAL2 * 0.125f;
         final float TEXT = DIAL2 - TEXTSIZE / 2.0f - 5.0f;
